@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     EditText userInputCity;
     Button checkWeather;
     String city;
+    TextView cityNameTextView;
+    TextView displayTempTextView;
+    TextView weatherDescriptionTextView;
 
     public void searchForCity(View view) {
 
@@ -56,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
         userInputCity = (EditText)  findViewById(R.id.userInputCity);
         checkWeather = (Button) findViewById(R.id.checkWeather);
-
-
-
+        cityNameTextView = (TextView) findViewById(R.id.cityNameTextView);
+        displayTempTextView = (TextView) findViewById(R.id.displayTempTextView);
+        weatherDescriptionTextView = (TextView) findViewById(R.id.weatherDescriptionTextView);
+        
 
     }
 
