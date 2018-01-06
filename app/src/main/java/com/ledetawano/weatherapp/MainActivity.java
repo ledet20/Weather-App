@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,26 +31,19 @@ public class MainActivity extends AppCompatActivity {
     TextView cityNameTextView;
     TextView displayTempTextView;
     TextView weatherDescriptionTextView;
-
-    public void searchForCity(View view) {
-
-       String userInputForCity =  userInputCity.getText().toString();
-
-        DownloadJSON task = new DownloadJSON();
-
-        city = userInputForCity;
-
-        task.execute("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=ea574594b9d36ab688642d5fbeab847e");
+    String weatherDescription = "";
 
 
-
-    }
 
     public double kelvinToFahrenheit(double kelvin) {
 
         double initialConversion = kelvin * (1.8);
 
         return Math.round(initialConversion - 459.67);
+    }
+
+    public String getWeatherDescription(String desc) {
+        return desc;
     }
 
 
@@ -63,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         cityNameTextView = (TextView) findViewById(R.id.cityNameTextView);
         displayTempTextView = (TextView) findViewById(R.id.displayTempTextView);
         weatherDescriptionTextView = (TextView) findViewById(R.id.weatherDescriptionTextView);
-        
+
 
     }
 
@@ -102,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
             } catch (MalformedURLException e) {
 
                 e.printStackTrace();
+
+
             } catch (IOException e) {
+
 
                 e.printStackTrace();
 
@@ -119,43 +116,79 @@ public class MainActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject(result);
 
-                String weatherObject = jsonObject.getString("weather");
-                String tempObject = jsonObject.getString("main");
+                String weatherJsonObject = jsonObject.getString("weather");
+
                 String nameOfCity = jsonObject.getString("name");
 
-                String tempVal = tempObject.substring(8,14);
+                String jsonTempValue = jsonObject.getJSONObject("main").getString("temp");
 
-                double kelvinVal = Double.parseDouble(tempVal);
 
-                double val = kelvinToFahrenheit(kelvinVal);
+                Log.i("Double temp", jsonTempValue);
 
-                Log.i("Double temp", Double.toString(val));
+                double tempStringToDouble = Double.parseDouble(jsonTempValue);
+
+                 double currentTempFoCity = kelvinToFahrenheit(tempStringToDouble);
+
+                Log.i("temp val", Double.toString(currentTempFoCity));
 
                 // parsing weather array to get description of Temp value
-                JSONArray arr = new JSONArray(weatherObject);
+                JSONArray arr = new JSONArray(weatherJsonObject);
 
                 for(int i = 0; i < arr.length(); i++) {
 
                     JSONObject description = arr.getJSONObject(i);
 
-                    Log.i("desc", description.getString("description"));
+                    weatherDescription = description.getString("description");
+
 
                 }
 
-                Log.i("temp", tempObject);
+
                 Log.i("name", nameOfCity);
-                Log.i("weather", weatherObject);
                 Log.i("result", jsonObject.toString());
 
 
             } catch (JSONException e) {
+
+                Toast.makeText(getApplicationContext(), "Please enter valid city", Toast.LENGTH_SHORT).show();
+
+                e.printStackTrace();
+
+            } catch(Exception e) {
+
+                Toast.makeText(getApplicationContext(), "Please enter valid city", Toast.LENGTH_SHORT).show();
 
                 e.printStackTrace();
 
             }
 
 
+
+
         }
+
+
+    }
+
+    public void searchForCity(View view) {
+
+        try {
+
+            String userInputForCity = userInputCity.getText().toString();
+
+            DownloadJSON task = new DownloadJSON();
+
+            city = userInputForCity;
+            
+            task.execute("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=ea574594b9d36ab688642d5fbeab847e");
+        }
+        catch(Exception e) {
+
+            Toast.makeText(getApplicationContext(), "Please enter valid city", Toast.LENGTH_SHORT).show();
+
+            e.printStackTrace();
+        }
+
 
 
     }
