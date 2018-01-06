@@ -61,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
         cityNameTextView = (TextView) findViewById(R.id.cityNameTextView);
         displayTempTextView = (TextView) findViewById(R.id.displayTempTextView);
         weatherDescriptionTextView = (TextView) findViewById(R.id.weatherDescriptionTextView);
-
-
+        
     }
 
     public class DownloadJSON extends AsyncTask<String, Void, String> {
