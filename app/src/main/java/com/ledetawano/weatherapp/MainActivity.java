@@ -127,11 +127,15 @@ public class MainActivity extends AppCompatActivity {
                 String jsonTempValue = jsonObject.getJSONObject("main").getString("temp");
 
 
+
+
                 Log.i("Double temp", jsonTempValue);
 
                 double tempStringToDouble = Double.parseDouble(jsonTempValue);
 
                  double currentTempFoCity = kelvinToFahrenheit(tempStringToDouble);
+
+                displayTempTextView.setText("Current Temp: " + Double.toString(currentTempFoCity) + " F");
 
                 Log.i("temp val", Double.toString(currentTempFoCity));
 
@@ -147,6 +151,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                     currentDesc =  description.getString("description").toString();
+
+                    weatherDescriptionTextView.setText(currentDesc);
+
+
                     Log.i("curr" , currentDesc);
 
 
