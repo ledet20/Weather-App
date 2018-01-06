@@ -6,6 +6,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import org.json.JSONArray;
@@ -22,6 +24,16 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     EditText userInputCity;
+    Button checkWeather;
+    String city;
+
+    public void searchForCity(View view) {
+
+       String userInputForCity =  userInputCity.getText().toString();
+
+        Log.i("User input", userInputForCity);
+
+    }
 
     public double kelvinToFahrenheit(double kelvin) {
 
@@ -37,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         userInputCity = (EditText)  findViewById(R.id.userInputCity);
+        checkWeather = (Button) findViewById(R.id.checkWeather);
 
         DownloadJSON task = new DownloadJSON();
 
-        String city = "Dubai";
+        city = "Dubai";
 
         task.execute("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=ea574594b9d36ab688642d5fbeab847e");
     }
@@ -86,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-
             return null;
         }
 
@@ -121,28 +133,10 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-
-
-                // parsing temperature array to get the current Temp in city
-              //  JSONArray tempArr = new JSONArray(tempObject);
-
-              //  for(int i = 0; i < tempArr.length(); i++) {
-
-                 ///   JSONObject tempVal = tempArr.getJSONObject(i);
-
-                //    Log.i("temperatuer", tempVal.getString("temp"));
-
-             //   }
-
-
-
-
                 Log.i("temp", tempObject);
                 Log.i("name", nameOfCity);
                 Log.i("weather", weatherObject);
                 Log.i("result", jsonObject.toString());
-
-              // JSONArray arr = new JSONArray(jsonObject);
 
 
             } catch (JSONException e) {
@@ -150,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
 
             }
-
 
 
         }
