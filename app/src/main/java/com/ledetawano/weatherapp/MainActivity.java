@@ -31,7 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
        String userInputForCity =  userInputCity.getText().toString();
 
-        Log.i("User input", userInputForCity);
+        DownloadJSON task = new DownloadJSON();
+
+        city = userInputForCity;
+
+        task.execute("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=ea574594b9d36ab688642d5fbeab847e");
+
+
 
     }
 
@@ -51,11 +57,9 @@ public class MainActivity extends AppCompatActivity {
         userInputCity = (EditText)  findViewById(R.id.userInputCity);
         checkWeather = (Button) findViewById(R.id.checkWeather);
 
-        DownloadJSON task = new DownloadJSON();
 
-        city = "Dubai";
 
-        task.execute("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=ea574594b9d36ab688642d5fbeab847e");
+
     }
 
     public class DownloadJSON extends AsyncTask<String, Void, String> {
