@@ -42,8 +42,12 @@ public class MainActivity extends AppCompatActivity {
         return Math.round(initialConversion - 459.67);
     }
 
-    public String getWeatherDescription(String desc) {
-        return desc;
+    public String getWeatherDescription() {
+        return weatherDescription;
+    }
+
+    public void setWeatherDescription(String desc) {
+        weatherDescription = desc;
     }
 
 
@@ -134,17 +138,26 @@ public class MainActivity extends AppCompatActivity {
                 // parsing weather array to get description of Temp value
                 JSONArray arr = new JSONArray(weatherJsonObject);
 
+                String currentDesc = "";
+
                 for(int i = 0; i < arr.length(); i++) {
 
                     JSONObject description = arr.getJSONObject(i);
 
-                    weatherDescription = description.getString("description");
+
+
+                    currentDesc =  description.getString("description").toString();
+                    Log.i("curr" , currentDesc);
 
 
                 }
 
+                setWeatherDescription(currentDesc);
 
                 Log.i("name", nameOfCity);
+
+                cityNameTextView.setText(nameOfCity);
+
                 Log.i("result", jsonObject.toString());
 
 
@@ -178,8 +191,10 @@ public class MainActivity extends AppCompatActivity {
 
             DownloadJSON task = new DownloadJSON();
 
+            Log.i("weather",  "the weather " + getWeatherDescription());
+
             city = userInputForCity;
-            
+
             task.execute("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=ea574594b9d36ab688642d5fbeab847e");
         }
         catch(Exception e) {
