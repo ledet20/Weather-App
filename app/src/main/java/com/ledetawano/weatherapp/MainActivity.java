@@ -25,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     public double kelvinToFahrenheit(double kelvin) {
 
-        return kelvin + 1;
+        double initialConversion = kelvin * (1.8);
+
+        return Math.round(initialConversion - 459.67);
     }
 
 
@@ -104,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
 
                 double kelvinVal = Double.parseDouble(tempVal);
 
-               // double val = kelvinToFahrenheit(kelvinValue);
+                double val = kelvinToFahrenheit(kelvinVal);
 
-                Log.i("Double temp", Double.toString(kelvinVal));
+                Log.i("Double temp", Double.toString(val));
 
                 // parsing weather array to get description of Temp value
                 JSONArray arr = new JSONArray(weatherObject);
